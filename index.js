@@ -13,13 +13,7 @@ connectDB();
 //midddlewares
 
 app.use(express.json());
-app.use(
-  cors({
-    origin: "*",
-    credentials: true, //access-control-allow-credentials:true
-    optionSuccessStatus: 200,
-  })
-);
+app.use(cors());
 app.get("/", (req, res) => res.send(`Server Running`));
 app.use("/api/user", userRouter);
 const PORT = process.env.PORT || 8080;
