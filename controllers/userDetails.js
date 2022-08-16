@@ -96,7 +96,7 @@ const forgotPassword = async (req, res) => {
 const newpassword = async (req, res) => {
   const newPassword = req.body.password;
   const sentToken = req.body.token;
-  await User.findOne({
+  await User.findAndUpdate({
     resetToken: sentToken,
     expireToken: { $gt: Date.now() },
   })
