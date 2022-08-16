@@ -85,7 +85,7 @@ const forgotPassword = async (req, res) => {
           from: "awsuriya@gmail.com",
           subject: "signup success",
           html: `<h1>welcome to task 44</h1>
-    <p>click here to reset password-<a href="http://localhost:3000/forgetPassword/${tokenForget}">Reset password</a> </p>`,
+    <p>click here to reset password-<a href="https://day44-frontend-reset-password.vercel.app/forgetPassword/${tokenForget}">Reset password</a> </p>`,
         });
         res.json({ message: "check your email" });
       });
