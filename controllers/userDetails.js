@@ -53,6 +53,7 @@ const registerUser = async (req, res, next) => {
 const authUser = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
+  try{
   if (user && (await user.matchPassword(password))) {
     res.json({
       _id: user._id,
@@ -61,10 +62,11 @@ const authUser = async (req, res) => {
       password: user.password,
       token: generateToken(user._id),
     });
-  } else {
-    res.status(401);
+  } catch(err){
+    res.status(401).send(err)
     console.log("invalid email id or password");
   }
+}
 };
 
 const forgotPassword = async (req, res) => {
