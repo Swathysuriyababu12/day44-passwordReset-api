@@ -17,7 +17,7 @@ const registerUser = async (req, res, next) => {
 
   if (!name || !email || !password) {
     res.status(400);
-    throw new Error("please enter all the fields");
+    console.log("please enter all the fields");
   }
 
   const userExists = await User.findOne({ email: req.body.email });
@@ -46,7 +46,7 @@ const registerUser = async (req, res, next) => {
     // });
   } else {
     res.status(400);
-    throw new Error("failed to create");
+    console.log("failed to create");
   }
 };
 
@@ -63,7 +63,7 @@ const authUser = async (req, res) => {
     });
   } else {
     res.status(401);
-    throw new Error("invalid email id or password");
+    console.log("invalid email id or password");
   }
 };
 
@@ -92,30 +92,25 @@ const forgotPassword = async (req, res) => {
     });
   });
 };
-
 const newpassword = async (req, res) => {
   const newPassword = req.body.password;
   const sentToken = req.body.token;
   await User.findOne({
     resetToken: sentToken,
     expireToken: { $gt: Date.now() },
-  })
-    .then((user) => {
-      if (!user) {
-        return res.status(422).json({ error: "Try again session expired" });
-      }
-      bcrypt.hash(newPassword, 12).then((hashedpassword) => {
-        user.password = hashedpassword;
-        user.resetToken = undefined;
-        user.expireToken = undefined;
-        user.save().then((saveduser) => {
-          res.json({ message: "password updated success" });
-        });
-      });
-    })
-    .catch((err) => {
-      console.log(err);
+  }).then((user) => {
+    if (!user) {
+      return res.status(422).json({ error: "Try again session expired" });
+    }
+    // bcrypt.hash(newPassword, 12).then((hashedpassword) => {
+    user.password = newPassword;
+    user.resetToken = undefined;
+    user.expireToken = undefined;
+    user.save().then((saveduser) => {
+      res.json({ message: "password updated success" });
     });
+  });
+  // })
 };
 
 module.exports = { registerUser, authUser, forgotPassword, newpassword };
