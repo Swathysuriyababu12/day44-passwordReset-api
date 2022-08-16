@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(
   cors({
     origin:
-      "https://day44-frontend-reset-password-l0lsrqkl3-swathysuriyababu12.vercel.app/login",
+      "https://day44-frontend-reset-password-l0lsrqkl3-swathysuriyababu12.vercel.app",
   })
 );
 app.get("/", (req, res) => res.send(`Server Running`));
