@@ -13,7 +13,12 @@ connectDB();
 //midddlewares
 
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin:
+      "https://day44-frontend-reset-password-l0lsrqkl3-swathysuriyababu12.vercel.app/login",
+  })
+);
 app.get("/", (req, res) => res.send(`Server Running`));
 app.use("/api/user", userRouter);
 const PORT = process.env.PORT || 8080;
