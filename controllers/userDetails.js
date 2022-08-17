@@ -53,20 +53,22 @@ const registerUser = async (req, res, next) => {
 const authUser = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
-  try{
-  if (user && (await user.matchPassword(password))) {
-    res.json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      password: user.password,
-      token: generateToken(user._id),
-    });
-  } catch(err){
-    res.status(401).send(err)
+  try {
+    if (user && (await user.matchPassword(password))) {
+      // console.log(enteredPassword, this.password);
+
+      res.json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        password: user.password,
+        token: generateToken(user._id),
+      });
+    }
+  } catch (err) {
+    res.status(401).send(err);
     console.log("invalid email id or password");
   }
-}
 };
 
 const forgotPassword = async (req, res) => {
